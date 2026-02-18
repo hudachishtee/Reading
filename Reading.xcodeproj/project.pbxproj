@@ -10,10 +10,38 @@
 		4297BE782F46410F0046539B /* Reading.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reading.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4297BE8F2F46416A0046539B /* Exceptions for "Reading" folder in "Reading" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4297BE772F46410F0046539B /* Reading */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4297BE7A2F46410F0046539B /* Reading */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4297BE8F2F46416A0046539B /* Exceptions for "Reading" folder in "Reading" target */,
+			);
 			path = Reading;
+			sourceTree = "<group>";
+		};
+		4297BE942F4641AD0046539B /* ViewModels */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		4297BE992F4641D30046539B /* Views */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4297BEAD2F46420F0046539B /* Others */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Others;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -33,6 +61,9 @@
 			isa = PBXGroup;
 			children = (
 				4297BE7A2F46410F0046539B /* Reading */,
+				4297BE942F4641AD0046539B /* ViewModels */,
+				4297BE992F4641D30046539B /* Views */,
+				4297BEAD2F46420F0046539B /* Others */,
 				4297BE792F46410F0046539B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -62,6 +93,9 @@
 			);
 			fileSystemSynchronizedGroups = (
 				4297BE7A2F46410F0046539B /* Reading */,
+				4297BE942F4641AD0046539B /* ViewModels */,
+				4297BE992F4641D30046539B /* Views */,
+				4297BEAD2F46420F0046539B /* Others */,
 			);
 			name = Reading;
 			packageProductDependencies = (
@@ -250,6 +284,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Reading/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -292,6 +327,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Reading/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
