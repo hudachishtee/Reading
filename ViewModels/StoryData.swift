@@ -6,13 +6,13 @@ struct StoryData {
         
         Story(
             title: "The Extra Sandwich",
-            coverImage: "sandwichCover",
+            coverImage: "sandwich_cover",
             pages: [
-                StoryPage(image: "sandwich1",
+                StoryPage(image: "story1_page1",
                           text: "Nora packed two sandwiches today. She did not know why. It just felt right."),
-                StoryPage(image: "sandwich2",
+                StoryPage(image: "story1_page2",
                           text: "At school, a boy sat alone. He looked at her sandwich."),
-                StoryPage(image: "sandwich3",
+                StoryPage(image: "story1_page3",
                           text: "She shared the extra sandwich. The boy smiled and said thank you.")
             ],
             moral: "A small kindness can make a big difference.",
@@ -28,13 +28,13 @@ struct StoryData {
         
         Story(
             title: "The Brave Little Wave",
-            coverImage: "waveCover",
+            coverImage: "wave_cover",
             pages: [
-                StoryPage(image: "wave1",
+                StoryPage(image: "story2page1",
                           text: "A little wave lived far out in the ocean."),
-                StoryPage(image: "wave2",
+                StoryPage(image: "story2page2",
                           text: "The little wave felt scared."),
-                StoryPage(image: "wave3",
+                StoryPage(image: "story2page3",
                           text: "The little wave rolled toward the shore bravely.")
             ],
             moral: "Being brave means trying even when you feel scared.",
@@ -50,13 +50,13 @@ struct StoryData {
         
         Story(
             title: "The Sunset Promise",
-            coverImage: "sunsetCover",
+            coverImage: "sunset_cover",
             pages: [
-                StoryPage(image: "sunset1",
+                StoryPage(image: "story3page1",
                           text: "Two friends sat by the sea."),
-                StoryPage(image: "sunset2",
+                StoryPage(image: "story3page2",
                           text: "They promised to meet again tomorrow."),
-                StoryPage(image: "sunset3",
+                StoryPage(image: "story3page3",
                           text: "Their promise stayed warm in their hearts.")
             ],
             moral: "Friendship and promises stay in your heart.",

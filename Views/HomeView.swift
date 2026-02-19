@@ -2,33 +2,42 @@ import SwiftUI
 
 struct HomeView: View {
     
+    @State private var navigate = false
+    
     var body: some View {
         NavigationStack {
-            VStack {
+            
+            ZStack {
+                Color.appBackground
+                    .ignoresSafeArea()
                 
-                Spacer()
-                
-                Image("owl")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 200)
-                
-//                Text("Reading Adventures")
-//                    .font(.custom("OpenDyslexic-Bold", size: 28))
-//                
-//                Text("A Dyslexia Storybook App")
-//                    .font(.custom("OpenDyslexic-Regular", size: 16))
-//                    .foregroundColor(.gray)
-                
-                Spacer()
-                
-                NavigationLink("Start") {
-                    StoryListView()
+                VStack {
+                    
+                    Spacer()
+                    
+                    Image("owl")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 200)
+                        .opacity(navigate ? 0 : 1)
+                        .animation(.easeInOut(duration: 0.5), value: navigate)
+                    
+                    Spacer()
                 }
-                .buttonStyle(.borderedProminent)
-                .padding()
+                
+                // Hidden NavigationLink
+                NavigationLink(
+                    destination: StoryListView(),
+                    isActive: $navigate
+                ) {
+                    EmptyView()
+                }
             }
-            .padding()
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    navigate = true
+                }
+            }
         }
     }
 }
