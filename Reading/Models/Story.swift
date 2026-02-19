@@ -13,6 +13,7 @@ struct StoryPage: Identifiable {
     let id = UUID()
     let image: String
     let text: String
+    let audioFileName: String   // ← ADD THIS
 }
 
 struct VocabularyItem: Identifiable {

@@ -12,46 +12,121 @@ struct StoryReaderView: View {
     
     var body: some View {
         
-        VStack(spacing: 20) {
+        VStack {
             
-            Text(story.title)
-                .font(.custom("OpenDyslexic-Bold", size: isIpad ? 32 : 24))
+            Spacer(minLength: isIpad ? 40 : 20)
             
+            // MARK: Story Image
             Image(story.pages[currentPage].image)
                 .resizable()
                 .scaledToFit()
-                .frame(maxWidth: isIpad ? 600 : .infinity)
+                .frame(maxWidth: isIpad ? 650 : .infinity)
+                .clipShape(RoundedRectangle(cornerRadius: 30))
+                .padding(.horizontal, isIpad ? 60 : 20)
             
+            Spacer(minLength: 30)
+            
+            // MARK: Story Text
             Text(story.pages[currentPage].text)
                 .font(.custom("OpenDyslexic-Regular",
-                              size: isIpad ? 26 : 20))
-                .lineSpacing(8)
-                .padding(isIpad ? 40 : 20)
+                              size: isIpad ? 30 : 22))
+                .lineSpacing(12)
+                .foregroundColor(.black.opacity(0.85))
+                .multilineTextAlignment(.leading)
+                .padding(.horizontal, isIpad ? 100 : 30)
             
-            HStack {
-                Button("Previous") {
-                    if currentPage > 0 { currentPage -= 1 }
+            Spacer()
+            
+            // MARK: Bottom Control Bar
+            VStack(spacing: 20) {
+                
+                ZStack {
+                    
+                    // Green pill background
+                    RoundedRectangle(cornerRadius: 40)
+                        .fill(Color(red: 228/255, green: 248/255, blue: 235/255))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 40)
+                                .stroke(Color(red: 130/255,
+                                              green: 182/255,
+                                              blue: 147/255),
+                                        lineWidth: 1.5)
+                        )
+                        .frame(height: isIpad ? 90 : 70)
+                        .padding(.horizontal, isIpad ? 120 : 30)
+                    
+                    HStack {
+                        
+                        // Previous
+                        Button {
+                            if currentPage > 0 {
+                                currentPage -= 1
+                            }
+                        } label: {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: isIpad ? 28 : 22, weight: .bold))
+                                .foregroundColor(.black)
+                        }
+                        
+                        Spacer()
+                        
+                        // Play Button (Narration placeholder)
+                        Button {
+                            playNarration()
+                        } label: {
+                            Circle()
+                                .fill(Color(red: 80/255,
+                                            green: 150/255,
+                                            blue: 140/255))
+                                .frame(width: isIpad ? 70 : 55,
+                                       height: isIpad ? 70 : 55)
+                                .overlay(
+                                    Image(systemName: "play.fill")
+                                        .foregroundColor(.white)
+                                        .font(.system(size: isIpad ? 28 : 22))
+                                )
+                        }
+                        
+                        Spacer()
+                        
+                        // Next
+                        Button {
+                            if currentPage < story.pages.count - 1 {
+                                currentPage += 1
+                            }
+                        } label: {
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: isIpad ? 28 : 22, weight: .bold))
+                                .foregroundColor(.black)
+                        }
+                    }
+                    .padding(.horizontal, isIpad ? 160 : 60)
                 }
                 
-                Spacer()
-                
-                Button("Next") {
-                    if currentPage < story.pages.count - 1 {
-                        currentPage += 1
+                // MARK: Page Dots
+                HStack(spacing: 10) {
+                    ForEach(0..<story.pages.count, id: \.self) { index in
+                        Circle()
+                            .fill(index == currentPage
+                                  ? Color(red: 80/255,
+                                          green: 150/255,
+                                          blue: 140/255)
+                                  : Color.gray.opacity(0.4))
+                            .frame(width: 8, height: 8)
                     }
                 }
-            }
-            .padding(.horizontal)
-            
-            NavigationLink("View Moral") {
-                MoralView(story: story)
-            }
-            
-            NavigationLink("Vocabulary of the Week") {
-                VocabularyView(story: story)
+                .padding(.bottom, isIpad ? 30 : 20)
             }
         }
-        .padding()
+        .background(Color(red: 227/255, green: 242/255, blue: 255/255))
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.hidden, for: .navigationBar)
+    }
+    
+    
+    // MARK: Narration Placeholder
+    private func playNarration() {
+        print("Play narration here")
     }
 }
 
