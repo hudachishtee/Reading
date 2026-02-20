@@ -30,12 +30,15 @@ struct StoryData {
                 VocabularyItem(
                     word: "Share",
                     meaning: "To give part to others",
-                    example: "She shared her sandwich."
+                    example: "She shared her sandwich.",
+                    audioFileName: "share_audio"
                 ),
                 VocabularyItem(
                     word: "Kind",
                     meaning: "Caring and helpful",
-                    example: "He was kind to his friend."
+                    example: "He was kind to his friend.",
+                    audioFileName: "kind_audio"
+
                 )
             ]
         ),
@@ -67,12 +70,16 @@ struct StoryData {
                 VocabularyItem(
                     word: "Brave",
                     meaning: "Not giving up even when afraid",
-                    example: "She was brave."
+                    example: "She was brave.",
+                    audioFileName: "brave_audio"
+
                 ),
                 VocabularyItem(
                     word: "Encourage",
                     meaning: "To help someone feel strong",
-                    example: "Friends encourage each other."
+                    example: "Friends encourage each other.",
+                    audioFileName: "encourage_audio"
+
                 )
             ]
         ),
@@ -104,12 +111,16 @@ struct StoryData {
                 VocabularyItem(
                     word: "Promise",
                     meaning: "Saying you will do something",
-                    example: "I promise to come back."
+                    example: "I promise to come back.",
+                    audioFileName: "promise_audio"
+
                 ),
                 VocabularyItem(
                     word: "Friendship",
                     meaning: "Caring and being kind",
-                    example: "Friendship makes us happy."
+                    example: "Friendship makes us happy.",
+                    audioFileName: "friendship_audio"
+
                 )
             ]
         )

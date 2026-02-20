@@ -42,7 +42,6 @@ struct StoryReaderView: View {
                 
                 ZStack {
                     
-                    // Green pill background
                     RoundedRectangle(cornerRadius: 40)
                         .fill(Color(red: 228/255, green: 248/255, blue: 235/255))
                         .overlay(
@@ -60,6 +59,7 @@ struct StoryReaderView: View {
                         // Previous
                         Button {
                             if currentPage > 0 {
+                                AudioManager.shared.stop()
                                 currentPage -= 1
                             }
                         } label: {
@@ -70,7 +70,7 @@ struct StoryReaderView: View {
                         
                         Spacer()
                         
-                        // Play Button (Narration placeholder)
+                        // Play Button
                         Button {
                             playNarration()
                         } label: {
@@ -92,6 +92,7 @@ struct StoryReaderView: View {
                         // Next
                         Button {
                             if currentPage < story.pages.count - 1 {
+                                AudioManager.shared.stop()
                                 currentPage += 1
                             }
                         } label: {
@@ -120,13 +121,31 @@ struct StoryReaderView: View {
         }
         .background(Color(red: 227/255, green: 242/255, blue: 255/255))
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar(.hidden, for: .navigationBar)
+        .toolbar {
+            
+            // MARK: Done Button (Only on Last Page)
+            if currentPage == story.pages.count - 1 {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink {
+                        MoralView(story: story)
+                            .onAppear {
+                                AudioManager.shared.stop()
+                            }
+                    } label: {
+                        Text("Done")
+                            .font(.custom("OpenDyslexic-Bold", size: 16))
+                            .foregroundColor(Color(red: 80/255,
+                                                   green: 150/255,
+                                                   blue: 140/255))
+                    }
+                }
+            }
+        }
     }
     
-    
-    // MARK: Narration Placeholder
     private func playNarration() {
-        print("Play narration here")
+        let page = story.pages[currentPage]
+        AudioManager.shared.playSound(named: page.audioFileName)
     }
 }
 

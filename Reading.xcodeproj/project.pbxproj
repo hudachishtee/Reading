@@ -44,6 +44,16 @@
 			path = Others;
 			sourceTree = "<group>";
 		};
+		4297BEB82F4815470046539B /* Audios */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Audios;
+			sourceTree = "<group>";
+		};
+		4297BEE72F4816670046539B /* VocabularyAudio */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VocabularyAudio;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +73,8 @@
 				4297BE7A2F46410F0046539B /* Reading */,
 				4297BE942F4641AD0046539B /* ViewModels */,
 				4297BE992F4641D30046539B /* Views */,
+				4297BEB82F4815470046539B /* Audios */,
+				4297BEE72F4816670046539B /* VocabularyAudio */,
 				4297BEAD2F46420F0046539B /* Others */,
 				4297BE792F46410F0046539B /* Products */,
 			);
@@ -96,6 +108,8 @@
 				4297BE942F4641AD0046539B /* ViewModels */,
 				4297BE992F4641D30046539B /* Views */,
 				4297BEAD2F46420F0046539B /* Others */,
+				4297BEB82F4815470046539B /* Audios */,
+				4297BEE72F4816670046539B /* VocabularyAudio */,
 			);
 			name = Reading;
 			packageProductDependencies = (

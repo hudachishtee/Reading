@@ -21,4 +21,5 @@ struct VocabularyItem: Identifiable {
     let word: String
     let meaning: String
     let example: String
+    let audioFileName: String   // ← ADD THIS
 }
