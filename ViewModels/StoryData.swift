@@ -21,7 +21,7 @@ struct StoryData {
                 ),
                 StoryPage(
                     image: "story1_page3",
-                    text: "She shared the extra sandwich. The boy smiled and said thank you.",
+                    text: "She shared the extra sandwich. The boy smiled and said thank you. Nora smiled too. She felt happy inside.",
                     audioFileName: "story1_page3_audio"
                 )
             ],
@@ -48,17 +48,17 @@ struct StoryData {
             pages: [
                 StoryPage(
                     image: "story2page1",
-                    text: "A little wave lived far out in the ocean.",
+                    text: "A little wave lived far out in the ocean. It watched the shore from a distance. The shore looked big and loud.",
                     audioFileName: "story2_page1_audio"
                 ),
                 StoryPage(
                     image: "story2page2",
-                    text: "The little wave felt scared.",
+                    text: "The little wave felt scared. Other waves rushed forward bravely. They whispered, 'You can do it.'",
                     audioFileName: "story2_page2_audio"
                 ),
                 StoryPage(
                     image: "story2page3",
-                    text: "The little wave rolled toward the shore bravely.",
+                    text: "The little wave took a deep breath. It rolled toward the shore. The shore welcomed it with a splash. The little wave was not scared anymore.",
                     audioFileName: "story2_page3_audio"
                 )
             ],
@@ -95,7 +95,7 @@ struct StoryData {
                 ),
                 StoryPage(
                     image: "story3page3",
-                    text: "Their promise stayed warm in their hearts.",
+                    text: "Their promise stayed warm in their hearts. They waved goodbye as the sun went down.",
                     audioFileName: "story3_page3_audio"
                 )
             ],
