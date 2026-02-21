@@ -12,7 +12,6 @@ struct HomeView: View {
                     .ignoresSafeArea()
                 
                 VStack {
-                    
                     Spacer()
                     
                     Image("owl")
@@ -25,7 +24,6 @@ struct HomeView: View {
                     Spacer()
                 }
                 
-                // Hidden NavigationLink
                 NavigationLink(
                     destination: StoryListView(),
                     isActive: $navigate

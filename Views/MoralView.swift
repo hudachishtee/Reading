@@ -25,8 +25,8 @@ struct MoralView: View {
                     .foregroundColor(Color(red: 54/255,
                                            green: 92/255,
                                            blue: 92/255))
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 20)
+                    .padding(.vertical, 14)
+                    .padding(.horizontal, 30)
                     .background(
                         RoundedRectangle(cornerRadius: 25)
                             .fill(Color(red: 208/255,
@@ -40,21 +40,20 @@ struct MoralView: View {
                                           blue: 140/255),
                                     lineWidth: 1.5)
                     )
-                    .padding(.top, isIpad ? 30 : 40)
+                    .padding(.top, isIpad ? 30 : 50)
                 
-                Spacer(minLength: isIpad ? 50 : 30)
+                Spacer(minLength: 40)
                 
-                // MARK: Thought Bubble + Owl
+                // MARK: Bubble + Owl
                 HStack(alignment: .bottom, spacing: 16) {
                     
-                    Text("A small kindness\ncan make a\nbig difference.")
-                        .lineLimit(3)
+                    Text(story.moral)
                         .font(.custom("OpenDyslexic-Regular",
                                       size: isIpad ? 26 : 18))
                         .multilineTextAlignment(.center)
-                        .lineSpacing(6)
+                        .lineSpacing(8)
                         .foregroundColor(.black.opacity(0.85))
-                        .padding(.vertical, 20)
+                        .padding(.vertical, 24)
                         .padding(.horizontal, 24)
                         .background(
                             RoundedRectangle(cornerRadius: 28)
@@ -67,8 +66,7 @@ struct MoralView: View {
                                               blue: 140/255),
                                         lineWidth: 1.5)
                         )
-                        .frame(maxWidth: isIpad ? 520 : 240) // 👈 flexible width
-                        .layoutPriority(1) // 👈 prevents compression
+                        .frame(maxWidth: isIpad ? 520 : 260)
                     
                     Image("owl_logo")
                         .resizable()
@@ -79,12 +77,9 @@ struct MoralView: View {
                 
                 Spacer()
                 
-                // MARK: Explore Vocabulary Button
+                // MARK: Vocabulary Button
                 NavigationLink {
                     VocabularyView(story: story)
-                        .onAppear {
-                            AudioManager.shared.stop()
-                        }
                 } label: {
                     Text("Explore Vocabulary")
                         .font(.custom("OpenDyslexic-Bold",
@@ -98,7 +93,7 @@ struct MoralView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 30))
                 }
                 .padding(.horizontal, isIpad ? 120 : 30)
-                .padding(.bottom, isIpad ? 50 : 30)
+                .padding(.bottom, isIpad ? 50 : 40)
             }
         }
         .navigationBarTitleDisplayMode(.inline)

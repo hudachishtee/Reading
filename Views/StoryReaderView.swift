@@ -4,7 +4,10 @@ struct StoryReaderView: View {
     
     let story: Story
     @State private var currentPage = 0
+    @State private var isPlaying = false
+    
     @Environment(\.horizontalSizeClass) var sizeClass
+    @Environment(\.dismiss) private var dismiss
     
     var isIpad: Bool {
         sizeClass == .regular
@@ -26,18 +29,19 @@ struct StoryReaderView: View {
             
             Spacer(minLength: 30)
             
-            // MARK: Story Text
-            Text(story.pages[currentPage].text)
+            // MARK: Story Text (Automatic Paragraph Split)
+            Text(formattedText(for: story.pages[currentPage].text))
                 .font(.custom("OpenDyslexic-Regular",
                               size: isIpad ? 30 : 22))
-                .lineSpacing(12)
+                .lineSpacing(14)
                 .foregroundColor(.black.opacity(0.85))
                 .multilineTextAlignment(.leading)
                 .padding(.horizontal, isIpad ? 100 : 30)
+                .animation(.easeInOut, value: currentPage)
             
             Spacer()
             
-            // MARK: Bottom Control Bar
+            // MARK: Bottom Controls
             VStack(spacing: 20) {
                 
                 ZStack {
@@ -56,23 +60,24 @@ struct StoryReaderView: View {
                     
                     HStack {
                         
-                        // Previous
+                        // MARK: Previous
                         Button {
                             if currentPage > 0 {
-                                AudioManager.shared.stop()
+                                stopAudio()
                                 currentPage -= 1
                             }
                         } label: {
                             Image(systemName: "chevron.left")
                                 .font(.system(size: isIpad ? 28 : 22, weight: .bold))
-                                .foregroundColor(.black)
+                                .foregroundColor(currentPage == 0 ? .gray : .black)
                         }
+                        .disabled(currentPage == 0)
                         
                         Spacer()
                         
-                        // Play Button
+                        // MARK: Play / Pause
                         Button {
-                            playNarration()
+                            toggleAudio()
                         } label: {
                             Circle()
                                 .fill(Color(red: 80/255,
@@ -81,7 +86,7 @@ struct StoryReaderView: View {
                                 .frame(width: isIpad ? 70 : 55,
                                        height: isIpad ? 70 : 55)
                                 .overlay(
-                                    Image(systemName: "play.fill")
+                                    Image(systemName: isPlaying ? "pause.fill" : "play.fill")
                                         .foregroundColor(.white)
                                         .font(.system(size: isIpad ? 28 : 22))
                                 )
@@ -89,17 +94,20 @@ struct StoryReaderView: View {
                         
                         Spacer()
                         
-                        // Next
+                        // MARK: Next
                         Button {
                             if currentPage < story.pages.count - 1 {
-                                AudioManager.shared.stop()
+                                stopAudio()
                                 currentPage += 1
                             }
                         } label: {
                             Image(systemName: "chevron.right")
                                 .font(.system(size: isIpad ? 28 : 22, weight: .bold))
-                                .foregroundColor(.black)
+                                .foregroundColor(
+                                    currentPage == story.pages.count - 1 ? .gray : .black
+                                )
                         }
+                        .disabled(currentPage == story.pages.count - 1)
                     }
                     .padding(.horizontal, isIpad ? 160 : 60)
                 }
@@ -122,15 +130,11 @@ struct StoryReaderView: View {
         .background(Color(red: 227/255, green: 242/255, blue: 255/255))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            
-            // MARK: Done Button (Only on Last Page)
             if currentPage == story.pages.count - 1 {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
                         MoralView(story: story)
-                            .onAppear {
-                                AudioManager.shared.stop()
-                            }
+                            .onAppear { stopAudio() }
                     } label: {
                         Text("Done")
                             .font(.custom("OpenDyslexic-Bold", size: 16))
@@ -141,16 +145,38 @@ struct StoryReaderView: View {
                 }
             }
         }
+        .onDisappear {
+            stopAudio()
+        }
+    }
+}
+
+// MARK: - Helpers
+extension StoryReaderView {
+    
+    private func formattedText(for text: String) -> String {
+        text
+            .replacingOccurrences(of: ". ", with: ".\n")
     }
     
-    private func playNarration() {
-        let page = story.pages[currentPage]
-        AudioManager.shared.playSound(named: page.audioFileName)
+    private func toggleAudio() {
+        if isPlaying {
+            stopAudio()
+        } else {
+            let page = story.pages[currentPage]
+            AudioManager.shared.playSound(named: page.audioFileName)
+            isPlaying = true
+        }
+    }
+    
+    private func stopAudio() {
+        AudioManager.shared.stop()
+        isPlaying = false
     }
 }
 
 #Preview {
     NavigationStack {
-        StoryReaderView(story: StoryData.stories[0])
+        StoryReaderView(story: StoryData.stories[1])
     }
 }

@@ -9,16 +9,14 @@ struct VocabularyView: View {
         
         ZStack {
             
-            // MARK: Background Color
             Color(red: 227/255, green: 242/255, blue: 255/255)
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
                 
-                // MARK: Top Bar (Back + Done)
+                // MARK: Top Bar
                 HStack {
                     
-                    // Back Button
                     Button {
                         dismiss()
                     } label: {
@@ -31,7 +29,6 @@ struct VocabularyView: View {
                     
                     Spacer()
                     
-                    // Done Button → Celebration Screen
                     NavigationLink {
                         CelebrationView(story: story)
                     } label: {
@@ -45,13 +42,9 @@ struct VocabularyView: View {
                 .padding(.horizontal)
                 .padding(.top, 10)
                 
-                
                 ScrollView {
                     VStack(spacing: 35) {
                         
-                        Spacer(minLength: -15)
-                        
-                        // MARK: Rounded Header
                         Text("Vocabulary of\nthe Week")
                             .font(.custom("OpenDyslexic-Bold", size: 30))
                             .foregroundColor(Color(red: 54/255,
@@ -76,10 +69,9 @@ struct VocabularyView: View {
                             .padding(.horizontal)
                             .padding(.top, 20)
                         
-                        
                         ForEach(story.vocabulary) { item in
                             
-                            VStack(alignment: .leading, spacing: 10) {
+                            VStack(alignment: .leading, spacing: 12) {
                                 
                                 HStack {
                                     Text(item.word)
@@ -91,7 +83,11 @@ struct VocabularyView: View {
                                         AudioManager.shared.playSound(named: item.audioFileName)
                                     } label: {
                                         Image(systemName: "speaker.wave.2.fill")
-                                            .foregroundColor(.gray)
+                                            .foregroundColor(
+                                                Color(red: 80/255,
+                                                      green: 150/255,
+                                                      blue: 140/255)
+                                            )
                                     }
                                 }
                                 
@@ -100,7 +96,7 @@ struct VocabularyView: View {
                                 
                                 Text("“\(item.example)”")
                                     .font(.custom("OpenDyslexic-Regular", size: 16))
-                                    .foregroundStyle(.gray)
+                                    .foregroundColor(.black.opacity(0.6))
                             }
                             .padding()
                             .frame(maxWidth: .infinity, alignment: .leading)
