@@ -19,27 +19,29 @@ struct MoralView: View {
             VStack {
                 
                 // MARK: Title
-                Text("Moral of the Story")
-                    .font(.custom("OpenDyslexic-Bold",
-                                  size: isIpad ? 32 : 22))
+                Text("Moral of\nthe Story")
+                    .font(.custom("OpenDyslexic-Bold", size: 30))
                     .foregroundColor(Color(red: 54/255,
                                            green: 92/255,
                                            blue: 92/255))
-                    .padding(.vertical, 14)
-                    .padding(.horizontal, 30)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 22)
                     .background(
-                        RoundedRectangle(cornerRadius: 25)
+                        RoundedRectangle(cornerRadius: 40)
                             .fill(Color(red: 208/255,
                                         green: 226/255,
                                         blue: 214/255))
                     )
                     .overlay(
-                        RoundedRectangle(cornerRadius: 25)
+                        RoundedRectangle(cornerRadius: 40)
                             .stroke(Color(red: 120/255,
                                           green: 168/255,
                                           blue: 140/255),
                                     lineWidth: 1.5)
                     )
+                    .padding(.horizontal)
+//                    .padding(.top, 20)
                     .padding(.top, isIpad ? 30 : 50)
                 
                 Spacer(minLength: 40)
