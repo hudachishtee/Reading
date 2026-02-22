@@ -2,20 +2,31 @@ import SwiftUI
 
 struct StoryListView: View {
     
+    @Environment(\.horizontalSizeClass) var sizeClass
+    
+    var isIpad: Bool {
+        sizeClass == .regular
+    }
+    
     var body: some View {
         
         ScrollView {
-            VStack(spacing: 50) {
+            VStack(spacing: isIpad ? 60 : 50) {
                 
                 // MARK: Header
                 Text("Choose A Story")
-                    .font(.custom("OpenDyslexic-Bold", size: 28))
-                    .foregroundColor(Color(red: 47/255, green: 93/255, blue: 98/255))
-                    .padding(.vertical, 18)
+                    .font(.custom("OpenDyslexic-Bold",
+                                  size: isIpad ? 36 : 28))
+                    .foregroundColor(Color(red: 47/255,
+                                           green: 93/255,
+                                           blue: 98/255))
+                    .padding(.vertical, isIpad ? 24 : 18)
                     .frame(maxWidth: .infinity)
                     .background(
                         RoundedRectangle(cornerRadius: 18)
-                            .fill(Color(red: 228/255, green: 248/255, blue: 235/255))
+                            .fill(Color(red: 228/255,
+                                        green: 248/255,
+                                        blue: 235/255))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 18)
                                     .stroke(Color(red: 130/255,
@@ -24,26 +35,29 @@ struct StoryListView: View {
                                             lineWidth: 1.2)
                             )
                     )
-                    .padding(.top, 50)
-                    .padding(.horizontal)
+                    .padding(.top, isIpad ? 70 : 50)
+                    .padding(.horizontal, isIpad ? 200 : 20)
                 
                 // MARK: Story Cards
-                VStack(spacing: 35) {
+                VStack(spacing: isIpad ? 150 : 5) {
+                    
                     ForEach(StoryData.stories) { story in
                         
                         NavigationLink {
                             StoryPreviewView(story: story)
                         } label: {
+                            
                             StoryCardView(story: story)
-                                .scaleEffect(1.08)
+                                .frame(maxWidth: isIpad ? 750 : .infinity)
                         }
                         .buttonStyle(.plain)
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, isIpad ? 100 : 20)
                 
-                Spacer(minLength: 40)
+                Spacer(minLength: 60)
             }
+            .frame(maxWidth: .infinity)
         }
         .background(Color.appBackground)
         .navigationBarTitleDisplayMode(.inline)
