@@ -195,9 +195,19 @@ extension StoryReaderView {
     private func loadAudioDuration() {
         let fileName = story.pages[currentPage].audioFileName
         
-        if let url = Bundle.main.url(forResource: fileName, withExtension: "mp3") {
-            let asset = AVURLAsset(url: url)
-            audioDuration = CMTimeGetSeconds(asset.duration)
+        guard let url = Bundle.main.url(forResource: fileName, withExtension: "mp3") else {
+            return
+        }
+        
+        let asset = AVURLAsset(url: url)
+        
+        Task {
+            do {
+                let duration = try await asset.load(.duration)
+                audioDuration = CMTimeGetSeconds(duration)
+            } catch {
+                print("Failed to load duration")
+            }
         }
     }
     

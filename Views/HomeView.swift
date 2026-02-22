@@ -5,9 +5,11 @@ struct HomeView: View {
     @State private var navigate = false
     
     var body: some View {
+        
         NavigationStack {
             
             ZStack {
+                
                 Color.appBackground
                     .ignoresSafeArea()
                 
@@ -23,18 +25,14 @@ struct HomeView: View {
                     
                     Spacer()
                 }
-                
-                NavigationLink(
-                    destination: StoryListView(),
-                    isActive: $navigate
-                ) {
-                    EmptyView()
-                }
             }
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     navigate = true
                 }
+            }
+            .navigationDestination(isPresented: $navigate) {
+                StoryListView()
             }
         }
     }
