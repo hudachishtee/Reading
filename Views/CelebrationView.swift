@@ -52,6 +52,8 @@ struct CelebrationView: View {
                     Text("You finished reading\n\(story.title)!")
                         .font(.custom("OpenDyslexic-Regular", size: 22))
                         .multilineTextAlignment(.center)
+                        .foregroundColor(.black)
+
                     
                     Image("owl_logo")
                         .resizable()

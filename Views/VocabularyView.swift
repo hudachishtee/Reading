@@ -76,6 +76,7 @@ struct VocabularyView: View {
                                 HStack {
                                     Text(item.word)
                                         .font(.custom("OpenDyslexic-Bold", size: 22))
+                                        .foregroundColor(.black) // ✅ Fixed
                                     
                                     Spacer()
                                     
@@ -93,10 +94,11 @@ struct VocabularyView: View {
                                 
                                 Text(item.meaning)
                                     .font(.custom("OpenDyslexic-Regular", size: 18))
+                                    .foregroundColor(.black) // ✅ Fixed
                                 
                                 Text("“\(item.example)”")
                                     .font(.custom("OpenDyslexic-Regular", size: 16))
-                                    .foregroundColor(.black.opacity(0.6))
+                                    .foregroundColor(.black) // ✅ Fixed
                             }
                             .padding()
                             .frame(maxWidth: .infinity, alignment: .leading)
