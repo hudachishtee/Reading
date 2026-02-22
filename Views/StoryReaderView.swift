@@ -14,6 +14,10 @@ struct StoryReaderView: View {
     @State private var audioDuration: Double = 0
     @State private var timer: Timer?
     
+    // 👇 NEW (Swipe Hint States)
+    @State private var showSwipeHint = true
+    @State private var swipeOffset: CGFloat = 0
+    
     @Environment(\.horizontalSizeClass) var sizeClass
     
     var isIpad: Bool {
@@ -41,8 +45,8 @@ struct StoryReaderView: View {
                 
                 Spacer(minLength: 20)
                 
-                // MARK: Scrollable Text + Visible Slider
-                HStack(alignment: .top, spacing: 8) {
+                // MARK: Scrollable Text + Swipe Hint
+                ZStack {
                     
                     ScrollView {
                         VStack(alignment: .leading, spacing: 14) {
@@ -65,21 +69,37 @@ struct StoryReaderView: View {
                     }
                     .frame(maxHeight: isIpad ? 300 : 220)
                     
-                    // 👇 Static Scroll Slider (like your image)
-                    ZStack(alignment: .top) {
-                        
-                        // Track
-                        Capsule()
-                            .fill(Color.gray.opacity(0.25))
-                            .frame(width: 6)
-                        
-                        // Thumb
-                        Capsule()
-                            .fill(Color.gray.opacity(0.7))
-                            .frame(width: 6, height: 60)
-                            .padding(.top, 20)
+                    // 👇 Swipe Animation Overlay
+                    if showSwipeHint {
+                        VStack(spacing: 6) {
+                            
+                            Image(systemName: "hand.point.up.left.fill")
+                                .font(.system(size: 32))
+                                .foregroundColor(Color(red: 80/255,
+                                                       green: 150/255,
+                                                       blue: 140/255))
+                                .offset(y: swipeOffset)
+                            
+                            Text("Swipe down to read")
+                                .font(.system(size: 13, weight: .semibold))
+                                .foregroundColor(Color(red: 80/255,
+                                                       green: 150/255,
+                                                       blue: 140/255))
+                        }
+                        .padding(.top, 20)
+                        .onAppear {
+                            
+                            withAnimation(.easeInOut(duration: 0.8).repeatCount(2, autoreverses: true)) {
+                                swipeOffset = 20
+                            }
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                withAnimation {
+                                    showSwipeHint = false
+                                }
+                            }
+                        }
                     }
-                    .frame(height: isIpad ? 300 : 220)
                 }
                 
                 Spacer()
@@ -154,7 +174,6 @@ struct StoryReaderView: View {
                         .padding(.horizontal, isIpad ? 160 : 60)
                     }
                     
-                    // Page Dots
                     HStack(spacing: 10) {
                         ForEach(0..<story.pages.count, id: \.self) { index in
                             Circle()
@@ -193,7 +212,7 @@ struct StoryReaderView: View {
     }
 }
 
-// MARK: - Logic (UNCHANGED)
+// MARK: - Logic
 extension StoryReaderView {
     
     private func preparePage() {
@@ -204,13 +223,16 @@ extension StoryReaderView {
             .map { $0.hasSuffix(".") ? $0 : $0 + "." }
         
         highlightedIndex = -1
+        
         loadAudioDuration()
     }
     
     private func loadAudioDuration() {
         let fileName = story.pages[currentPage].audioFileName
         
-        guard let url = Bundle.main.url(forResource: fileName, withExtension: "mp3") else { return }
+        guard let url = Bundle.main.url(forResource: fileName, withExtension: "mp3") else {
+            return
+        }
         
         let asset = AVURLAsset(url: url)
         
@@ -225,12 +247,17 @@ extension StoryReaderView {
     }
     
     private func toggleAudio() {
-        isPlaying ? stopAudio() : startAudio()
+        if isPlaying {
+            stopAudio()
+        } else {
+            startAudio()
+        }
     }
     
     private func startAudio() {
         let page = story.pages[currentPage]
         AudioManager.shared.playSound(named: page.audioFileName)
+        
         isPlaying = true
         startHighlighting()
     }
@@ -246,6 +273,7 @@ extension StoryReaderView {
         guard sentences.count > 0 else { return }
         
         let interval = audioDuration / Double(sentences.count)
+        
         highlightedIndex = 0
         
         timer?.invalidate()
