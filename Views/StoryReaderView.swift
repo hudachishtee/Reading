@@ -41,27 +41,46 @@ struct StoryReaderView: View {
                 
                 Spacer(minLength: 20)
                 
-                // MARK: Scrollable Text
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 14) {
-                        ForEach(Array(sentences.enumerated()), id: \.offset) { index, sentence in
-                            Text(sentence)
-                                .font(.custom("OpenDyslexic-Regular",
-                                              size: isIpad ? 30 : 22))
-                                .foregroundColor(
-                                    index == highlightedIndex
-                                    ? Color(red: 80/255,
-                                            green: 150/255,
-                                            blue: 140/255)
-                                    : .black.opacity(0.85)
-                                )
-                                .animation(.easeInOut(duration: 0.3), value: highlightedIndex)
+                // MARK: Scrollable Text + Visible Slider
+                HStack(alignment: .top, spacing: 8) {
+                    
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 14) {
+                            ForEach(Array(sentences.enumerated()), id: \.offset) { index, sentence in
+                                Text(sentence)
+                                    .font(.custom("OpenDyslexic-Regular",
+                                                  size: isIpad ? 30 : 22))
+                                    .foregroundColor(
+                                        index == highlightedIndex
+                                        ? Color(red: 80/255,
+                                                green: 150/255,
+                                                blue: 140/255)
+                                        : .black.opacity(0.85)
+                                    )
+                                    .animation(.easeInOut(duration: 0.3), value: highlightedIndex)
+                            }
                         }
+                        .padding(.horizontal, isIpad ? 100 : 30)
+                        .padding(.bottom, 20)
                     }
-                    .padding(.horizontal, isIpad ? 100 : 30)
-                    .padding(.bottom, 20)
+                    .frame(maxHeight: isIpad ? 300 : 220)
+                    
+                    // 👇 Static Scroll Slider (like your image)
+                    ZStack(alignment: .top) {
+                        
+                        // Track
+                        Capsule()
+                            .fill(Color.gray.opacity(0.25))
+                            .frame(width: 6)
+                        
+                        // Thumb
+                        Capsule()
+                            .fill(Color.gray.opacity(0.7))
+                            .frame(width: 6, height: 60)
+                            .padding(.top, 20)
+                    }
+                    .frame(height: isIpad ? 300 : 220)
                 }
-                .frame(maxHeight: isIpad ? 300 : 220)
                 
                 Spacer()
                 
@@ -84,7 +103,6 @@ struct StoryReaderView: View {
                         
                         HStack {
                             
-                            // Previous
                             Button {
                                 if currentPage > 0 {
                                     stopAudio()
@@ -100,7 +118,6 @@ struct StoryReaderView: View {
                             
                             Spacer()
                             
-                            // Play / Pause
                             Button {
                                 toggleAudio()
                             } label: {
@@ -119,7 +136,6 @@ struct StoryReaderView: View {
                             
                             Spacer()
                             
-                            // Next
                             Button {
                                 if currentPage < story.pages.count - 1 {
                                     stopAudio()
@@ -177,7 +193,7 @@ struct StoryReaderView: View {
     }
 }
 
-// MARK: - Logic
+// MARK: - Logic (UNCHANGED)
 extension StoryReaderView {
     
     private func preparePage() {
@@ -188,16 +204,13 @@ extension StoryReaderView {
             .map { $0.hasSuffix(".") ? $0 : $0 + "." }
         
         highlightedIndex = -1
-        
         loadAudioDuration()
     }
     
     private func loadAudioDuration() {
         let fileName = story.pages[currentPage].audioFileName
         
-        guard let url = Bundle.main.url(forResource: fileName, withExtension: "mp3") else {
-            return
-        }
+        guard let url = Bundle.main.url(forResource: fileName, withExtension: "mp3") else { return }
         
         let asset = AVURLAsset(url: url)
         
@@ -212,17 +225,12 @@ extension StoryReaderView {
     }
     
     private func toggleAudio() {
-        if isPlaying {
-            stopAudio()
-        } else {
-            startAudio()
-        }
+        isPlaying ? stopAudio() : startAudio()
     }
     
     private func startAudio() {
         let page = story.pages[currentPage]
         AudioManager.shared.playSound(named: page.audioFileName)
-        
         isPlaying = true
         startHighlighting()
     }
@@ -238,7 +246,6 @@ extension StoryReaderView {
         guard sentences.count > 0 else { return }
         
         let interval = audioDuration / Double(sentences.count)
-        
         highlightedIndex = 0
         
         timer?.invalidate()
